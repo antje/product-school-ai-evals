@@ -12,3 +12,7 @@ Thumbs.db
 # Local exports / datasets you don't want public yet
 *.local.json
 *.local.csv
+
+# Local Python env for eval_lab.ipynb
+.venv/
+.ipynb_checkpoints/

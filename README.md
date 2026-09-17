@@ -12,8 +12,8 @@ This is a **template repo**. Click **Use this template → Create a new reposito
 
 | Module | Artifact | Status | File |
 |---|---|---|---|
-| M1 | **Evaluation Strategy Canvas** | ☐ | `01-evaluation-strategy/strategy-canvas.md` |
-| M1 | **Eval harness proof** (links + screenshots) | ☐ | `01-evaluation-strategy/eval-harness-proof.md` |
+| M1 | **Evaluation Strategy Canvas** | ☑ | `01-evaluation-strategy/strategy-canvas.md` |
+| M1 | **Eval harness proof** (links + screenshots) | ☑ | `01-evaluation-strategy/eval-harness-proof.md` |
 | M2 | **Failure audit log** | ☐ | `02-failure-discovery/audit-log.md` |
 | M2 | **Failure Taxonomy** | ☐ | `02-failure-discovery/failure-taxonomy.md` |
 | M3 | **Runnable eval suite** (results) | ☐ | `03-eval-suites/lab-1-eval-suite.md` |
@@ -30,7 +30,7 @@ This is a **template repo**. Click **Use this template → Create a new reposito
 
 ## The feature in one sentence
 
-_What LLM feature are you evaluating, who relies on it, and what is the cost of getting it wrong?_
+Ascend IQ is a customer-facing AI agent inside Ascend Analytics, a B2B market-intelligence platform. It answers plain-language competitive questions for VP-level strategists at Fortune 500 accounts who pay $50k+ a year for verified data. A wrong answer in front of one of the top 50 accounts costs the renewal and the relationship, so the question this repo answers is whether it clears that bar: ship, or hold.
 
 ---
 
