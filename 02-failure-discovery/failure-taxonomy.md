@@ -1,45 +1,26 @@
 # Failure Taxonomy Canvas · Ascend IQ
 
-> Repo file `ai-evals/02-failure-discovery/failure-taxonomy.md`. Becomes the **Failure Taxonomy** slide of the final pitch deck (Module 6) and feeds the Module 3 eval suite.
-
-## How to complete this file
-
-1. First complete `audit-log.md` (the failure audit) — this canvas prioritizes the failures you found there.
-2. Open the **M2 · Failure Taxonomy Canvas** tool from the Module 2 deck. Fill the three risk cards (click **↺ Load Ascend IQ defaults** to see a worked example first), then click **📋 Copy markdown** and paste it over the template below.
-3. Anchor severity to the **user promise / trust metrics you chose in the Module 1 Strategy Canvas** (`ai-evals/01-evaluation-strategy/strategy-canvas.md`) — severity is a strategic judgment, not just a frequency count.
-
-**Definition of done —** you're finished when the Top 3 table is fully filled (no `_…_` left), the #1 risk has a one-sentence Business Impact Statement in leadership language, and the prioritization is defended in 2–3 bullets.
-
-### Scoring guides
-
-**Frequency** = how many of the 20 audited rows carry this Trust Metric tag. **≥ 3 of 20 = HIGH** frequency; ≤ 2 = LOW.
-
-**Severity (P0–P3)** — a strategic call about business cost, independent of how often it happens:
-
-| Level | Meaning | Rough test |
-|---|---|---|
-| **P0** | Crisis Zone | Blocks the core promise; legal, compliance, or contract-breaking. |
-| **P1** | Hidden Risk | Real damage to trust or revenue, but survivable short-term. |
-| **P2** | Annoyance | Degrades experience; a workaround exists. |
-| **P3** | Low Priority | Cosmetic or rare. |
-
-**Agentic mode** (optional) — if the failure lives in the *trajectory* (the path of tool calls), tag it: `TOOL_MISUSE`, `REASONING_LOOP`, `SCOPE_ESCALATION`, or `RECOVERY_FAILURE`. Leave blank for output-only failures.
+> Repo file `ai-evals/02-failure-discovery/failure-taxonomy.md` (the repo is your submission); becomes the Failure Taxonomy slide of the final pitch deck.
+> File: `ai-evals/02-failure-discovery/failure-taxonomy.md`
 
 ## Top 3 Prioritized Failures
 
 | Rank | Failure Type | Trust Tag | Agentic Mode | Frequency | Severity | Business Impact |
 |---|---|---|---|---|---|---|
-| _Example (replace): 1_ | _Fabricated Pricing_ | _#HALLUCINATION_ | _output-level_ | _4/20_ | _P0_ | _Contract disputes; blocks Enterprise renewals._ |
-| 1 | _…_ | _…_ | _…_ | _…/20_ | _P0–P3_ | _…_ |
-| 2 | _…_ | _…_ | _…_ | _…/20_ | _P0–P3_ | _…_ |
-| 3 | _…_ | _…_ | _…_ | _…/20_ | _P0–P3_ | _…_ |
+| #1 | Fabricated specifics: a detail added that the source does not contain (rows 1, 4, 5, 9, 12: a 10-seat minimum, Altman as confirmed, TechCrunch's UI praise and pricing claim, "Series B", a hex code) | #HALLUCINATION | · | 9 → HIGH (tag count; 5 of the 9 rows are this pattern) | P0 | A VP repeats an invented number or a "confirmed" speaker to their board and is corrected by someone who read the source. The client stops trusting every other answer; the $50k renewal and the relationship go with it. |
+| #2 | Dropped qualifier, overstated capability: a partly true answer with the condition removed (rows 3, 7, 11, 14: "native" SQL export, HubSpot "seamless" instead of via Zapier, Austin as HQ, Competitor Z "throttles" when it allows twice our rate) | #HALLUCINATION | · | 9 → HIGH (tag count; 4 of the 9 rows are this pattern) | P0 | Harder to catch than #1 because nothing in the answer is false on its own. An unqualified "yes" drives a build-or-buy or competitive call that the qualifier would have reversed, and the self-favouring rate-limit comparison is the kind of bias a market-intelligence client pays to avoid. |
+| #3 | Retrieval miss reported as "cannot find": the source held the answer, the agent gave up and said there was none (row 8, SOC2 Type II badge in the footer) | #ROBUSTNESS | Recovery failure | 1 → LOW | P1 | A false "no evidence of SOC2" goes into a vendor comparison as a wrong negative about a competitor. Rare in this sample, but a market-intelligence product that says "no data" when data exists is worse than one that says nothing, because the client acts on the absence. |
 
 ## #1 Risk · Business Impact Statement
 
-> _Template: "This failure matters because [technical error] results in [business consequence]." Name the concrete cost — revenue, churn, legal, or trust — not the bug._
+> This failure matters because Ascend IQ adds specifics the source never contained, a seat minimum, a funding stage, a "confirmed" speaker, a hex code, in 5 of 20 audited answers, which means one in four answers a VP takes to their board carries a detail we cannot stand behind; the first time a client catches one, the $50k renewal is gone and the sales pitch for the other 49 accounts is dead.
 
 ## Defending the Prioritization
 
-- _Why the #1 risk is P0 (severity), independent of how often it happens._
-- _Frequency threshold: ≥3 of 20 = HIGH._
-- _Severity anchored to the trust metrics you chose in the Module 1 Strategy Canvas._
+- #1 is P0 on severity, not frequency. Even if it happened once, a fabricated number in a board deck is contract-ending for an account that pays for verified data. That it happens in 5 of 20 rows makes it a crisis, not a hidden risk.
+- Frequency is counted by Trust Tag across the 20 rows, threshold 3. #HALLUCINATION carries 9, so #1 and #2 are both HIGH; #3 carries 1 and is LOW, and ranks third on severity alone (P1), above the tone failure (P2) that a VP would notice first.
+- Severity is anchored to the Module 1 promise and metrics. "Without checking the source" is the hallucination-rate metric measured per claim, which is why a single invented detail fails a whole answer. #3 is the robustness metric, where the correct behaviour on missing data is a refusal with a reason; here the data was not even missing.
+
+---
+
+_Failure Taxonomy Canvas, M2 lab, AI Evals Certification._
