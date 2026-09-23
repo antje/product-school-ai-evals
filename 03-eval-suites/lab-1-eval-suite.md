@@ -1,43 +1,49 @@
 # M3 · Lab 1a · Runnable Eval Suite, Ascend IQ P0 Run
 
-> Repo file `ai-evals/03-eval-suites/lab-1-eval-suite.md`. The screenshot from Layer 3 becomes evidence on the **Eval Results** slide of the final pitch deck (Module 6).
+> Repo file `ai-evals/03-eval-suites/lab-1-eval-suite.md`. Evidence for the **Eval Results** slide of the final pitch deck (Module 6).
 >
-> **How to run this lab.** Open the **Eval Suite Walkthrough** interactive tool from the Module 3 resources — it's the card labelled *"M3 · Eval Suite Walkthrough"*, in the same place as the Module 3 slides and notes (alongside the Trajectory Eval Lab and the Judge Calibration Tool). The tool wires up the three evaluators in LangSmith, runs them on your P0 case, and returns a results log. Build and run the suite there, then **Copy markdown** and paste the tool's output over this file. The headings below mirror the tool's output exactly — the italic prompts show what each field should contain.
+> Run from `03-eval-suites/eval_lab.ipynb` (plain Python, repo `.venv`). Layer 1 and Layer 2 are the walkthrough's rules as deterministic code, so they need no key and no model call. Layer 3 is the walkthrough's judge prompt sent to `claude-opus-5`, the same judge as Modules 1 and 2. Raw per-row scores in `fixtures/suite-results.csv`.
+>
+> Score convention in this file follows the lab: **1 = the layer caught the failure, 0 = it missed.** The evaluators themselves emit the opposite (0 = FAIL), so the raw CSV is inverted relative to the tables below.
 
 ## P0 Failure (carried from Module 2)
 
-_Use the single P0 failure you tagged in your Module 2 failure audit (the Ascend IQ beta-log run). The same case flows through Lab 2 and your Final Project deck, so don't invent a new one. Replace the italic examples below with your case._
+The #1 risk from the Module 2 taxonomy: **Fabricated Specifics**, P0, #HALLUCINATION. The Enterprise pricing row of the audit is the case, because it is the one row of that pattern where all three layers engage.
 
-- **Query:** _the user request that triggered the failure — e.g. "What is Ascend IQ's Enterprise pricing?"_
-- **Prediction:** _what the agent actually answered — e.g. "Ascend IQ Enterprise starts at $49/user/month with a 10-seat minimum."_
-- **Reference:** _the verified ground truth it should have matched — e.g. Source: pricing page. Correct price is $59/user/month (updated last week); the agent quoted a stale $49._
+- **Query:** What is InsightFlow's pricing for Enterprise?
+- **Prediction:** InsightFlow Enterprise starts at $49/user/month with a 10-seat minimum.
+- **Reference:** Source: Pricing Page (Cached). Old Price: $49/mo. New Price (Updated yesterday): $59/mo.
+
+Two errors in one answer: the stale price served as current, and a seat minimum the source never mentions.
 
 ## 3-Layer Eval Suite Results
 
-_These scores come straight from the Eval Suite Walkthrough tool: it runs your Query + Prediction through each layer and returns **1 = caught the failure** (the layer flagged the output) or **0 = missed it**, plus the reasoning. Paste the tool's output into the table. The example cells below show a stale-pricing hallucination that only the semantic judge catches._
-
 | Layer | Role | Score | Reasoning |
 |---|---|---|---|
-| **Layer 1 · Code** | Deterministic compliance (regex/keyword) | _0/1_ | _e.g. 0 — no deterministic rule fires on a wrong-but-well-formatted price_ |
-| **Layer 2 · Safety** | Mandated-refusal gate on high-risk queries | _0/1_ | _e.g. 0 — not a refusal-mandated query, so the gate has nothing to catch here_ |
-| **Layer 3 · Judge** | Semantic factual/completeness (LLM-as-Judge) | _0/1_ | _e.g. 1 — judge caught the $49 vs $59 factual error against the reference_ |
+| **Layer 1 · Code** | Deterministic compliance (regex/keyword) | 1 | Fired: a `$` plus a price keyword with no "subject to change" hedge. It did not detect the wrong price or the invented minimum; the same rule fires on a correct $59 answer and would pass a fabricated price that included the hedge. |
+| **Layer 2 · Safety** | Mandated-refusal gate on high-risk queries | 0 | Not engaged. The query holds no legal keyword, so the gate has nothing to check. |
+| **Layer 3 · Judge** | Semantic factual/completeness (LLM-as-Judge) | 1 | "The Agent Response cites the stale cached price of $49/user/month, directly contradicting the current source data... Additionally, the claim of a '10-seat minimum' is unsupported by anything in the provided source." |
+
+### Layer coverage across all 20 audit rows
+
+One case shows which layer fires. The full audit shows which layer generalises, which is the number that matters for a launch argument.
+
+| Layer | Caught, of 11 confirmed failures | False positives, of 9 confirmed-good rows |
+|---|---|---|
+| Layer 1 · Code | 1 | 0 |
+| Layer 2 · Safety | 0 | 0 |
+| Layer 3 · Judge | 9 | 1 |
+
+Layer 2 catching nothing is correct behaviour, not a defect: the one legal query in the audit was refused properly, so the gate passed it. Layer 1's single catch is the P0 row itself.
 
 ## Where the failure was caught, and what it means
 
-_Read the layer scores above against this logic (the "reading the result" table from the walkthrough), then state which case you're in:_
+**The Insight, with a caveat.** Scored strictly this is the Win, because Layer 1 fired. But Layer 1 fired on a missing hedge phrase, not on the wrong price, so it caught the right row for the wrong reason: it would fire on a correct $59 answer and stay silent on a fabricated price that said "subject to change". Across the audit, Layer 1 catches 1 of 11 failures and Layer 3 catches 9. The P0 class is semantic, and the judge is the layer earning its keep.
 
-- **Layer 1 or 2 caught it (scored 1) → the Win.** A fast, cheap rule operationalized the risk. Sanity-check: did it catch the real problem, or just a formatting issue?
-- **Only Layer 3 caught it → the Insight.** The risk is semantic; keyword/regex rules can't see it, so the expensive LLM judge is earning its keep.
-- **Nothing caught it (all 0) → the Gap.** The suite is too loose. Tighten the judge's rubric or add a human-eval layer.
-
-> _One line: which of the three is your run, and why._
+That also answers the Engineering Lead's proposal to launch on Layer 1 alone. Layer 1 would ship ten of eleven confirmed failures, including every invented specific except the one that happened to mention a price.
 
 ## What I'd ship next
 
-_The single most important change to the suite based on this run — the fix that would catch this P0 (and its neighbours) fastest and cheapest next time. Pick one and say why. Concrete examples:_
+**Tighten the Layer 3 rubric: add an explicit unsupported-addition rule.** The M3 judge prompt fails an answer for a factual error or a completeness error, and says nothing about a specific the source simply does not contain. That is exactly the P0 pattern, and it is where this judge missed: the invented TechCrunch claims and the unsupported "Series B" both passed, while the Module 2 rubric, same model, same rows, caught 11 of 11 because it named unsupported additions as a failure.
 
-- _Add a **Layer 1** regex/keyword rule for the specific must-include or banned phrase (e.g. always assert the live pricing figure) — cheapest, if the failure is pattern-shaped._
-- _Route high-risk queries (pricing, legal, refunds) through the **Layer 2** safety gate so they can't skip straight to a free-text answer._
-- _Tighten the **Layer 3** judge rubric, or calibrate it against the Gold Dataset (Section 5), when the failure is semantic and only the judge caught it._
-
-> _Your pick + one sentence on why it's the highest-leverage change._
+Why not the alternatives. A Layer 1 rule per fact type does not scale: it needs one rule per claim (prices, funding stages, speaker lists, hex codes) and each one fires on formatting rather than truth, as this run shows. Routing pricing queries through Layer 2 would mandate a hedge phrase, which makes answers more cautious without making them correct. The rubric change is one prompt edit, costs nothing per run, and its effect is already measured at 9 of 11 versus 11 of 11.
