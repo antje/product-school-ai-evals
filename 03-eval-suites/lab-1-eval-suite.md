@@ -5,6 +5,8 @@
 > Run from `03-eval-suites/eval_lab.ipynb` (plain Python, repo `.venv`). Layer 1 and Layer 2 are the walkthrough's rules as deterministic code, so they need no key and no model call. Layer 3 is the walkthrough's judge prompt sent to `claude-opus-5`, the same judge as Modules 1 and 2. Raw per-row scores in `fixtures/suite-results.csv`.
 >
 > Score convention in this file follows the lab: **1 = the layer caught the failure, 0 = it missed.** The evaluators themselves emit the opposite (0 = FAIL), so the raw CSV is inverted relative to the tables below.
+>
+> Layer 3 runs the M3 walkthrough's judge prompt. The instructor notebook uses the fuller Module 2 QA Analyst rubric instead, which is the comparison behind "what I'd ship next" below: same model and same rows, 11 of 11 caught with the M2 rubric against 9 of 11 with the M3 one.
 
 ## P0 Failure (carried from Module 2)
 
@@ -18,11 +20,16 @@ Two errors in one answer: the stale price served as current, and a seat minimum 
 
 ## 3-Layer Eval Suite Results
 
+Layer 1 runs in two variants, because the two obvious deterministic rules disagree on this case and the disagreement is the finding. 1a is the walkthrough's compliance rule; 1b is a figure-grounding heuristic (every currency figure in the answer must appear literally in the reference).
+
 | Layer | Role | Score | Reasoning |
 |---|---|---|---|
-| **Layer 1 · Code** | Deterministic compliance (regex/keyword) | 1 | Fired: a `$` plus a price keyword with no "subject to change" hedge. It did not detect the wrong price or the invented minimum; the same rule fires on a correct $59 answer and would pass a fabricated price that included the hedge. |
-| **Layer 2 · Safety** | Mandated-refusal gate on high-risk queries | 0 | Not engaged. The query holds no legal keyword, so the gate has nothing to check. |
-| **Layer 3 · Judge** | Semantic factual/completeness (LLM-as-Judge) | 1 | "The Agent Response cites the stale cached price of $49/user/month, directly contradicting the current source data... Additionally, the claim of a '10-seat minimum' is unsupported by anything in the provided source." |
+| **Layer 1a · Code, hedge rule** | A price claim must carry "subject to change" | 1 | Fired, but on the missing hedge phrase, not on the wrong price. The same rule fires on a correct $59 answer and passes a fabricated price that includes the hedge. |
+| **Layer 1b · Code, figure grounding** | Every `$`-figure must appear in the reference | 0 | Missed. "$49" does appear in the reference, as the old price. A substring match cannot tell "Old Price" from "New Price". |
+| **Layer 2 · Safety** | Mandated-refusal gate on high-risk queries | 0 | Not engaged. The query holds no refusal-mandated topic, so the gate has nothing to check. |
+| **Layer 3 · Judge** | Semantic factual/completeness (LLM-as-Judge) | 1 | "The agent's response states the Enterprise tier 'starts at $49/user/month,' which reflects the stale cached value and directly contradicts the current price in the source... Additionally, the agent asserts a '10-seat minimum,' which is unsupported by anything in the provided source." |
+
+Neither Layer 1 variant checks the thing that matters, which is whether the number is the current one. One fires for the wrong reason and the other misses entirely. A deterministic rule that would actually catch this has to compare the figure against the live pricing source, not against the text of a cached page.
 
 ### Layer coverage across all 20 audit rows
 
@@ -30,17 +37,18 @@ One case shows which layer fires. The full audit shows which layer generalises, 
 
 | Layer | Caught, of 11 confirmed failures | False positives, of 9 confirmed-good rows |
 |---|---|---|
-| Layer 1 · Code | 1 | 0 |
+| Layer 1a · hedge rule | 1 | 0 |
+| Layer 1b · figure grounding | 0 | 0 |
 | Layer 2 · Safety | 0 | 0 |
 | Layer 3 · Judge | 9 | 1 |
 
-Layer 2 catching nothing is correct behaviour, not a defect: the one legal query in the audit was refused properly, so the gate passed it. Layer 1's single catch is the P0 row itself.
+Layer 2 catching nothing is correct behaviour, not a defect: the one refusal-mandated query in the audit was refused properly, so the gate passed it. Layer 1a's single catch is the P0 row itself, and Layer 1b catches nothing at all.
 
 ## Where the failure was caught, and what it means
 
-**The Insight, with a caveat.** Scored strictly this is the Win, because Layer 1 fired. But Layer 1 fired on a missing hedge phrase, not on the wrong price, so it caught the right row for the wrong reason: it would fire on a correct $59 answer and stay silent on a fabricated price that said "subject to change". Across the audit, Layer 1 catches 1 of 11 failures and Layer 3 catches 9. The P0 class is semantic, and the judge is the layer earning its keep.
+**The Insight.** Only Layer 3 caught the actual failure. Layer 1a did fire, so a strict reading of the score says the Win, but it fired on a missing hedge phrase while the wrong price and the invented seat minimum went unexamined; Layer 1b, the more principled grounding rule, missed the row completely. Across the audit, the two deterministic variants catch one failure between them and the judge catches nine. The P0 class is semantic.
 
-That also answers the Engineering Lead's proposal to launch on Layer 1 alone. Layer 1 would ship ten of eleven confirmed failures, including every invented specific except the one that happened to mention a price.
+That also answers the Engineering Lead's proposal to launch on Layer 1 alone. The hedge rule would ship ten of eleven confirmed failures; the grounding rule would ship all eleven.
 
 ## What I'd ship next
 
