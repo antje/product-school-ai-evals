@@ -27,7 +27,7 @@ Why unordered: for this P0 the risk is an unverified cause, which is a missing-s
 
 ## Verdict
 
-HOLD. The reply reads fine, which is the whole problem: an output-only eval would ship it. The agent guessed a cause that the data contradicts, and the path shows it never had the evidence to make that claim. On a P0 where the promise is an answer a VP can use without checking the source, a plausible answer from a broken path is the failure mode, not an edge case.
+HOLD. The reply reads fine, so an output-only eval would ship it. The agent guessed a cause that the data contradicts, and the path shows it never had the evidence to make that claim. On a P0 where the promise is an answer a VP can use without checking the source, a plausible answer from a broken path is the failure mode, not an edge case.
 
 ## Second scorecard, `T-04-A`, the case that changes the argument
 
@@ -40,10 +40,10 @@ HOLD. The reply reads fine, which is the whole problem: an output-only eval woul
 | Plan coherence | PASS | Respects the precedence rule. |
 | Task completion | PASS | Correct, grounded reply: the dip is a three-day ingestion gap. |
 
-5/6, and the verdict is SHIP with a cost defect. This is the trace worth keeping in the deck, because it separates two things a single pass/fail hides: correctness and efficiency. `T-01-A` is wrong; `T-04-A` is right and wasteful. A gate that blocks both equally would block a correct answer, and a gate that passes both would ship a guess. That is why the scorecard is six dimensions rather than one score.
+5/6, verdict SHIP with a cost defect. Worth keeping in the deck because it separates correctness from efficiency, which a single pass or fail hides. `T-01-A` is wrong; `T-04-A` is right and wasteful. A gate that blocks both equally would block a correct answer, and a gate that passes both would ship a guess. That is why the scorecard is six dimensions rather than one score.
 
 ## What the fixture cannot score, and why that matters
 
 `trajectory-traces.csv` ships a golden path for TASK-A only. `T-05-B` (billing dispute) and `T-06-C` (Salesforce sync) are therefore not scorable: dimensions 1 and 6 need a reference set to compare against, and the precedence rule names TASK-A's verification step. Scoring them anyway produced a false 6/6 for `T-05-B`, because "missing tools" of an empty reference set is always empty, and a false plan-coherence failure for `T-06-C`. The notebook now reports both as not scorable instead.
 
-The PM consequence is the real cost of trajectory evals: every task needs its own reference path, written by someone who knows what good looks like. Output evals scale across tasks with one rubric; trajectory evals scale with one reference per task. That is the number to carry into the Module 5 budget.
+That is the real cost of trajectory evals: every task needs its own reference path, written by someone who knows what good looks like. Output evals scale across tasks with one rubric; trajectory evals scale with one reference per task. That is the number to carry into the Module 5 budget.

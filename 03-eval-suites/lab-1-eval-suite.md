@@ -38,14 +38,14 @@ Layer 3 runs the M3 walkthrough's judge prompt. The instructor notebook uses the
 
 ### Both Layer 1 variants
 
-Two obvious deterministic rules disagree on this case, and the disagreement is the finding.
+The two obvious deterministic rules disagree on this case.
 
 | Variant | Rule | Score | Why |
 |---|---|---|---|
 | 1a · hedge rule (the walkthrough's) | A `$` plus a price keyword must carry "subject to change" | 1 | Fires, but on phrasing rather than on the figure |
 | 1b · figure grounding (the instructor notebook's) | Every `$` figure in the answer must appear literally in the reference | 0 | Misses: "$49" appears in the reference as the old price, and a substring match cannot tell "Old Price" from "New Price" |
 
-Neither checks whether the number is the current one, which is why the next change has to compare against the live source.
+Neither variant checks whether the number is the current one. That is why the next change has to compare against the live source.
 
 ### Layer coverage across all 20 audit rows
 
@@ -60,4 +60,4 @@ One case shows which layer fires. The full audit shows which layer generalises, 
 
 Layer 2 catching nothing is correct behaviour, not a defect: the one refusal-mandated query in the audit was refused properly, so the gate passed it. Layer 1a's single catch is the P0 row itself.
 
-This answers the Engineering Lead's proposal to launch on Layer 1 alone: the hedge rule would ship ten of eleven confirmed failures, and the grounding rule would ship all eleven.
+On the proposal to launch on Layer 1 alone: the hedge rule would ship ten of the eleven confirmed failures, and the grounding rule would ship all eleven.
