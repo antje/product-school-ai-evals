@@ -9,7 +9,7 @@
 | **Trust Metric** | Hallucination rate, measured per claim rather than per answer. |
 | **02 · Evaluator** | Hybrid. Layer 3 LLM-as-Judge with an explicit unsupported-addition rule, a Layer 1 code assertion on figures that must match the live source, and human review on a sample to keep the judge honest. The judge must come from a different model family than the agent it grades, to avoid self-preference bias. Ascend IQ's own model is not named in the brief, so engineering confirms the separation at wiring time; our judge is `claude-opus-5`. |
 | **Detection logic** | Split the answer into factual claims. Each claim must trace to a span in the retrieved source. A claim with no span, or a span that says something different, fails the answer. Currency figures are additionally compared against the live pricing source, not the cached page text, because both regex variants we tried pass a stale price that appears in the source as an old value. |
-| **03 · Threshold** | Launch gate: zero unsupported claims in a 300-claim held-out audit. Zero of 300 bounds the true rate below 1% at 95% confidence (rule of three, 3/300). Steady-state target: 0.26% per answer, derived from 40 questions per VP per month and a tolerance of fewer than 10% of VPs meeting one fabrication in month one; proving that bound needs about 1,150 claims, so it is a post-launch target rather than a launch gate. Judge itself: Cohen's κ ≥ 0.6 against human labels, re-measured on every rubric or model change. |
+| **03 · Threshold** | Launch gate: zero unsupported claims in a 300-claim held-out audit. Zero of 300 bounds the true rate below 1% at 95% confidence (rule of three, 3/300). Steady-state target: 0.26% per answer, derived from 40 questions per VP per month and a tolerance of fewer than 10% of VPs meeting one fabrication in month one; proving that bound needs about 1,150 claims, so it is a post-launch target rather than a launch gate. Judge itself: Cohen's κ ≥ 0.6 against human labels, currently 0.824, re-measured on every rubric edit and every model change. |
 | **Strategy** | Safety First (maximise TPR). We accept the judge flagging good answers, because a missed fabrication is the contract-ending one and a hedged answer is not. |
 | **04 · Business Stakes** | Each caught fabrication ends the promise this product is sold on, an answer a VP can use without checking the source, for an account paying $50k+ a year. At the audit's rate of 6 in 20 answers, a VP asking ten questions has a 97% chance of carrying one into a board deck, so the 50-account launch cohort meets it in week one. |
 | **05 · Owner** | Group PM owns the gate and the ship or hold sign-off. The Ascend IQ engineering lead owns keeping it green in CI. |
@@ -32,7 +32,7 @@ GIVEN the nightly eval run,
 WHEN the held-out audit reports any unsupported claim in 300,
 THEN the build is red and the release does not promote.
 
-Also required: judge agreement with human labels at κ ≥ 0.6, re-measured whenever the rubric or the judge model changes.
+Also required: judge agreement with human labels at κ ≥ 0.6, re-measured on every rubric edit as well as every judge-model change. Measured at κ = 0.824 on the grounding set, after two rubric revisions; see `03-eval-suites/lab-judge-calibration.md`.
 
 ### B. For UX / Design
 
