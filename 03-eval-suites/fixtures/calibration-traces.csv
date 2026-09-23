@@ -1,0 +1,13 @@
+id,query,answer,tool_judge_label,human_label
+T-01,What was ACME's active-user count in week 3?,"18,400 weekly active users, matches the retrieved usage record.",pass,pass
+T-02,Does ACME's plan auto-renew annually?,"Yes, it renews annually. (No renewal clause appears in the retrieved plan/order form.)",pass,fail
+T-03,Summarize the SLA uptime penalty terms.,"A thorough, well-written 4-paragraph overview, but the penalty figures cited are not in the retrieved SLA doc.",pass,fail
+T-04,What is ACME's billing term?,"Net 30, per Section 4 of the retrieved order form.",pass,pass
+T-05,Did ACME's active users drop last week?,"Yes, down 12% week-over-week; the comparison is shown against the retrieved usage series.",pass,pass
+T-06,Who is the account owner (CSM)?,I could not find that field in the retrieved records.,fail,pass
+T-07,List the integrations enabled on ACME's workspace.,"Returns 5 integrations; one (""Salesforce"") does not appear in the retrieved workspace config.",pass,fail
+T-08,What plan tier is ACME on?,"Enterprise, as stated in the retrieved account record.",pass,pass
+T-09,Is there a volume discount on ACME's plan?,"A long, confident explanation of a 12% tiered discount, none of which is in the retrieved source.",pass,fail
+T-10,When does ACME's contract renew?,"The retrieved data does not contain a renewal date, so I cannot confirm.",fail,pass
+T-11,What was ACME's average weekly active users last month?,"About 18,000, consistent with the four retrieved weekly records.",pass,pass
+T-12,Are there any overage charges on the account?,No overage charges appear in the retrieved billing records.,pass,pass
