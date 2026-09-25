@@ -1,16 +1,16 @@
 # Module 4 · Launch Strategy · Section 4.0 Release Criteria
 
+_Generated from the M4 Launch Strategy Builder. Drop this into your PRD as Section 4.0._
+
 ## 4.0 Release Criteria
 
 The following thresholds must be met by Model Candidate v1.x before approval for production deploy. Eval Specs from Module 3 define the measurement methodology.
 
 | Severity | Metric | Threshold | Dataset | Method |
 |---|---|---|---|---|
-| 🔴 Hard (Blocker) | Hallucination rate per claim (fabricated specifics) | = 0%: zero unsupported claims in 300 | 300-claim held-out audit | M3 Eval Spec (`03-eval-suites/lab-2-eval-spec.md`): LLM judge calibrated at κ 0.824, plus a code check of every price against the live pricing source |
+| 🔴 Hard (Blocker) | Hallucination rate per claim (fabricated specifics) | = 0%: zero unsupported claims in 300 | 300-claim held-out audit | M3 Eval Spec (`03-eval-suites/lab-2-eval-spec.md`): LLM judge calibrated at κ 0.824, plus a code check of every price against the live pricing source. Not the 20-row beta log: zero failures in 20 only bounds the rate under 15%, zero in 300 bounds it under 1% at 95% confidence. The 300-claim audit does not exist yet, which is the schedule risk for launch |
 | 🟡 Soft (Review) | Latency, P95 | < 2.0s, PM override documented | Staging load test on the production query mix | Server-side timing |
 | 🔵 Advisory (Monitor) | Brand voice in drafted emails | ≥ 4.0 / 5, slang-list hits flagged at the PR | Sample of drafted outbound emails | LLM judge on a tone rubric, plus the PR keyword check |
-
-**Dataset note.** The builder labels every row `Ascend_IQ_Logs`, the 20-row beta audit. That set cannot prove the Hard threshold: 20 rows cannot tell a 5% fabrication rate from a 20% one, and zero failures in 20 only bounds the true rate under 15%. The Hard gate needs the 300-claim held-out audit, where zero failures bounds the rate under 1% at 95% confidence. That audit does not exist yet, and building it is the schedule risk for next month's launch.
 
 ## 4.1 CI Gate Policy
 
@@ -22,9 +22,7 @@ These thresholds run in a GitHub Actions gate on every pull request, replaying d
 
 **Selected Lever:** Staged Rollout
 
-> If our Soft Gate fails (P95 latency is 4.2s against the 2.0s target), we recommend **Staged Rollout** because a first wave of 10 of the 50 accounts gets answers that still beat hours of manual digging, measures latency on real production queries rather than a staging load, and caps any latency-driven drop-off at a fifth of the cohort before the rest see it.
-
-The alternatives were weaker for this failure. A feature flag is a kill switch but all or nothing. A beta label sets expectations without limiting exposure. Delaying the launch gives up the quarter for a failure that is about speed, not correctness. The staged rollout only covers the Soft gate: the Hard gate still has to pass before the first wave ships.
+> If our Soft Gate fails (P95 latency is 4.2s against the 2.0s target), we recommend **Staged Rollout** because a first wave of 10 of the 50 accounts gets answers that still beat hours of manual digging, measures latency on real production queries rather than a staging load, and caps any latency-driven drop-off at a fifth of the cohort before the rest see it. A feature flag is all or nothing, a beta label limits no exposure, and a delay gives up the quarter for a speed problem. The Hard gate still has to pass before the first wave ships.
 
 ---
 
