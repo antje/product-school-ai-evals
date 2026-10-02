@@ -4,6 +4,9 @@
 
 > My final project for Product School's **AI Evals** certification. One evaluation system for a real LLM feature, from strategy, through failure discovery and an automated eval suite, to the gates and governance that let it ship safely.
 
+**Presentation:** [https://antje.github.io/product-school-ai-evals/06-culture/lab-2-final-pitch.html](https://antje.github.io/product-school-ai-evals/06-culture/lab-2-final-pitch.html)  
+**Repository:** [https://github.com/antje/product-school-ai-evals](https://github.com/antje/product-school-ai-evals)
+
 ## Executive path
 
 | | |
