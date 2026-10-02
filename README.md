@@ -1,6 +1,6 @@
 # AI Evals: Final Project
 
-[![Ascend IQ: ship or hold? HOLD. 6 of 20 beta answers stated a detail the source does not support; 97% chance a VP meets one within ten questions; 0 unsupported claims in 300 is the bar to ship.](assets/readme-banner.jpg)](06-culture/lab-2-final-pitch.html)
+[![Ascend IQ: ship or hold? HOLD. 6 of 20 beta answers stated a detail the source does not support; 97% chance a VP meets one within ten questions; 0 unsupported claims in 300 is the bar to ship.](assets/readme-banner.jpg)](https://antje.github.io/product-school-ai-evals/06-culture/lab-2-final-pitch.html)
 
 > My final project for Product School's **AI Evals** certification. One evaluation system for a real LLM feature, from strategy, through failure discovery and an automated eval suite, to the gates and governance that let it ship safely.
 
@@ -9,7 +9,7 @@
 | | |
 |---|---|
 | **Problem** | Ascend IQ answers plain-language competitive questions for VP strategists at Fortune 500 accounts who pay $50k+ a year for verified data. Its promise: an answer they can put in front of their board without checking the source. |
-| **The call** | **HOLD** the launch to the top 50 accounts until it passes a zero-fabrication audit. [Memo](06-culture/lab-1-ship-hold-memo.md) · [Deck](06-culture/lab-2-final-pitch.html) |
+| **The call** | **HOLD** the launch to the top 50 accounts until it passes a zero-fabrication audit. [Memo](06-culture/lab-1-ship-hold-memo.md) · [Deck](https://antje.github.io/product-school-ai-evals/06-culture/lab-2-final-pitch.html) |
 | **Evidence today** | 6 of 20 beta answers stated a detail the source does not support, and none cited a source. At 30% per answer, a VP asking ten questions meets one 97% of the time (1 − 0.7¹⁰). [Taxonomy](02-failure-discovery/failure-taxonomy.md) |
 | **What is at stake** | At least $2.5M of annual renewals (50 accounts × the $50k floor), with the error found in a client's board deck rather than in our logs. |
 | **The bar to ship** | 0 unsupported claims in a 300-claim held-out audit. By the rule of three that bounds the per-claim rate under 1% at 95% confidence; zero in the 20-row beta would only bound it under 15%. [Spec](03-eval-suites/lab-2-eval-spec.md) |
