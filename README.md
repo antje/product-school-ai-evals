@@ -1,5 +1,7 @@
 # AI Evals: Final Project
 
+[![Ascend IQ: ship or hold? HOLD. 6 of 20 beta answers stated a detail the source does not support; 97% chance a VP meets one within ten questions; 0 unsupported claims in 300 is the bar to ship.](assets/readme-banner.jpg)](06-culture/lab-2-final-pitch.html)
+
 > My final project for Product School's **AI Evals** certification. One evaluation system for a real LLM feature, from strategy, through failure discovery and an automated eval suite, to the gates and governance that let it ship safely.
 
 ---
