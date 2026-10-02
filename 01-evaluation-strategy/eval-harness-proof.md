@@ -38,7 +38,7 @@ The run shows that prompt design is a measurable lever, and the measurement cuts
 
 The shape of the rubric is the same shape as the hallucination-rate metric in the strategy canvas: every claim traceable to the source, or the answer fails, and only then does form get scored. This harness is the pattern Ascend IQ's evals will follow.
 
-Two things I learned about the judge itself. First, rubric wording matters more than I expected: with the same judge, one clause rewritten (what counts as a preserved blocker) moved agreement with the starter labels from 13/20 to 15/20. Second, judge choice matters as much: with the rewritten rubric, `gpt-5.5` (same family as the generator) reached 15/20 and failed rows for narrative timestamps like "the pilot closed yesterday"; `claude-opus-5` reached 20/20 on the identical rubric. The judge is part of the eval. The module warns that untuned judges default to "everything is great"; this one did the opposite and failed rows for detail a CEO would never miss, until the rubric said what a preserved blocker means.
+Two things I learned about the judge itself. First, rubric wording matters more than I expected: with the same judge, one clause rewritten (what counts as a preserved blocker) moved agreement with the starter labels from 13/20 to 15/20. Second, judge choice matters as much: with the rewritten rubric, `gpt-5.5` (same family as the generator) reached 15/20 and failed rows for narrative timestamps like "the pilot closed yesterday"; `claude-opus-5` reached 20/20 on the identical rubric. The judge is part of the eval. Untuned judges are known to default to "everything is great"; this one did the opposite and failed rows for detail a CEO would never miss, until the rubric said what a preserved blocker means.
 
 All three runs are in `runs/`, outputs verbatim.
 
@@ -52,7 +52,7 @@ Generate 20 example rows for evaluating executive email-summary quality. Each ro
 
 The model returned 20 rows, 10 good and 10 bad, across the five domains, with every bad type represented (dropped deadline, changed number, invented claim, padding past 100 words, dropped metric). It did not honour the email length spec: emails came out at 49 to 66 words. The "good" reasons are formulaic ("preserves the metric, risk, and deadline"), so those labels still need a human check.
 
-## Definition of good vs bad (golden-set criteria)
+## Your definition of good vs bad (golden-set criteria), the graded part, write your own
 
 The reader is a CEO who acts on the summary without opening the email. A summary is judged in two ordered tests.
 
@@ -71,7 +71,7 @@ The exact wording the judge saw is `GOLDEN_CRITERIA` in `eval_lab.ipynb`. This s
 
 Reflection on the two prompts: for a CEO who needs speed, A is the right shape and the wrong content; it needs one more clause per bullet (the baseline, the blocker). For a comms team that needs polish, B is the right register and the wrong instinct; "keep a positive tone" is what turned a delay into "on track". The fix for B is to drop that instruction, not to shorten it.
 
-## Repo paths
+## Screenshots, links or repo paths (optional if you followed the demo)
 
 - `01-evaluation-strategy/eval_lab.ipynb`: the executed notebook with all cell outputs (generation, head-to-head verdict, per-row scores).
 - `01-evaluation-strategy/fixtures/module1-starter-dataset.csv`: the 20 starter rows with first-pass labels.

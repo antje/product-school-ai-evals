@@ -32,7 +32,7 @@ Run from `03-eval-suites/eval_lab.ipynb` (plain Python, repo `.venv`); raw per-r
 
 Score convention: **1 = the layer caught the failure, 0 = it missed.** The evaluators emit the opposite (0 = FAIL), so the raw CSV is inverted relative to the tables here.
 
-Layers 1 and 2 are pure Python, no model call, which is what makes them free to run and identical on every run. Only Layer 3 calls a model (`claude-opus-5`, the judge used in Modules 1 and 2). The walkthrough presents Layers 1 and 2 as system prompts; sending a deterministic rule to a model would make it probabilistic, so they are implemented as functions.
+Layers 1 and 2 are pure Python, no model call, which is what makes them free to run and identical on every run. Only Layer 3 calls a model (`claude-opus-5`, the judge used in Modules 1 and 2). Layers 1 and 2 are often set up as system prompts to a model; sending a deterministic rule to a model would make it probabilistic, so here they are implemented as functions.
 
 Layer 3 runs a two-criterion judge prompt (factual error, completeness error). The fuller Module 2 QA Analyst rubric, which also names unsupported additions, is the comparison behind "what I'd ship next": 11 of 11 with the M2 rubric against 9 of 11 with the M3 one.
 

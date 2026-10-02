@@ -4,7 +4,7 @@
 
 11 confirmed failures in 20 rows after overrides: #HALLUCINATION x9, #ROBUSTNESS x1, #UX_TRUST x1, #FAIRNESS x0. Zero overrides applied: the judge passed both legitimate refusals on its own, and the one refusal it failed was of a safe, answerable query.
 
-Judge: `claude-opus-5` with a QA Analyst system prompt, run from `02-failure-discovery/eval_lab.ipynb`; raw scores and reasoning in `fixtures/ascend-iq-judge-scores.csv`. Every #HALLUCINATION tag was confirmed by reading `prediction` against `reference` by hand rather than on the judge's word. Data note: the course CSV has an unquoted comma in the cold-email row's prediction, which splits it into four fields; the fixture copy quotes that field.
+Judge: `claude-opus-5` with a QA Analyst system prompt, run from `02-failure-discovery/eval_lab.ipynb`; raw scores and reasoning in `fixtures/ascend-iq-judge-scores.csv`. Every #HALLUCINATION tag was confirmed by reading `prediction` against `reference` by hand rather than on the judge's word. Data note: the source CSV has an unquoted comma in the cold-email row's prediction, which splits it into four fields; the fixture copy quotes that field.
 
 ## Audit rows (match by query)
 

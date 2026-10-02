@@ -2,7 +2,7 @@
 
 Twelve grounding traces, in `fixtures/calibration-traces.csv` with my labels and the reference judge labels supplied with the traces. Measured in `03-eval-suites/eval_lab.ipynb`; judge `claude-opus-5`.
 
-**Cohen's κ:** 0.824 (near-perfect) on the third rubric, PASSES the κ ≥ 0.60 gate. The first two rubrics failed it.
+**Cohen's κ:** 0.824 (near-perfect) on the third rubric, PASSES the κ ≥ 0.60 gate on these 12 traces. The first two rubrics failed it. The rubric was revised against these same traces, so 0.824 is a tuning-set figure; agreement on a held-out labelled set is measured before the 300-claim audit.
 
 | Judge | κ | Raw agreement p₀ | Chance agreement pₑ | Disagreements |
 |---|---|---|---|---|

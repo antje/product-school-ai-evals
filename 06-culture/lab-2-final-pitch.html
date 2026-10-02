@@ -356,8 +356,8 @@
 
 <!-- ============ 2. STRATEGY ============ -->
 <section id="strategy" data-title="Strategy">
-  <div class="eyebrow"><span>Slide 5</span><span class="tag">M1</span></div>
-  <h2>Strategy</h2>
+  <div class="eyebrow"><span>Slide 5 &middot; Strategy</span><span class="tag">M1</span></div>
+  <h2>Accuracy before speed: one invented figure ends a $50k account</h2>
 
   <div class="grid g2" style="grid-template-columns: minmax(0,1fr) minmax(0,1.2fr);">
     <div class="card">
@@ -408,8 +408,8 @@
 
 <!-- ============ 3. RISKS ============ -->
 <section id="risks" data-title="Risks">
-  <div class="eyebrow"><span>Slide 6</span><span class="tag">M2</span></div>
-  <h2>Risks</h2>
+  <div class="eyebrow"><span>Slide 6 &middot; Risks</span><span class="tag">M2</span></div>
+  <h2>6 of 20 beta answers stated a detail the source does not support</h2>
 
   <div class="grid g3">
     <div class="card tile failure sev0">
@@ -447,8 +447,8 @@
 
 <!-- ============ 4. PROOF ============ -->
 <section id="proof" data-title="Proof">
-  <div class="eyebrow"><span>Slide 7</span><span class="tag">M3</span></div>
-  <h2>Proof</h2>
+  <div class="eyebrow"><span>Slide 7 &middot; Proof</span><span class="tag">M3</span></div>
+  <h2>Only the LLM judge catches it: 9 of 11, against 1 for code</h2>
 
   <div class="proof-wrap">
     <div class="browser" id="browser">
@@ -475,8 +475,8 @@
 
 <!-- ============ 5. STANDARDS ============ -->
 <section id="standards" data-title="Standards">
-  <div class="eyebrow"><span>Slide 8</span><span class="tag">M4</span></div>
-  <h2>Standards</h2>
+  <div class="eyebrow"><span>Slide 8 &middot; Standards</span><span class="tag">M4</span></div>
+  <h2>Zero unsupported claims in 300, or it does not ship</h2>
 
   <div class="std">
     <div class="card hero bigcallout">
@@ -502,8 +502,8 @@
 
 <!-- ============ 6. DECISION ============ -->
 <section id="decision" data-title="Decision">
-  <div class="eyebrow"><span>Slide 9</span><span class="tag">M5 + M6</span></div>
-  <h2>Decision</h2>
+  <div class="eyebrow"><span>Slide 9 &middot; Decision &middot; Pyramid memo</span><span class="tag">M5 + M6</span></div>
+  <h2>Hold until the audit passes; go/no-go on Nov 9</h2>
   <div class="verdict">
     <div class="badge">HOLD</div>
     <small>until the 300-claim zero-fabrication audit passes; first wave of 10 accounts Nov 9 if it does</small>
@@ -517,12 +517,14 @@
     <div class="args">
       <div class="arg"><span class="n">01</span><p>The failure we would ship is the one clients pay us to prevent: invented specifics and dropped qualifiers break 'use it without checking the source', and none of the 20 beta answers cites a source.</p></div>
       <div class="arg"><span class="n">02</span><p>The exposure lands on our most valuable accounts, all at once, where we can't take it back: an invented number goes into a client's board deck, so we learn about it from them.</p></div>
-      <div class="arg"><span class="n">03</span><p>We can't yet prove it's fixed, but we know exactly what would: the judge (kappa 0.824), the CI gate (PR #218 blocked) and Level 3 coverage are in place; the 300-claim audit is the missing proof.</p></div>
+      <div class="arg"><span class="n">03</span><p>We can't yet prove it's fixed, but we know exactly what would: the judge (kappa 0.824 on its tuning set), the CI gate (PR #218 blocked) and Level 3 coverage are in place; the 300-claim audit is the missing proof.</p></div>
     </div>
 
     <div class="close">
       <span class="label">Business risk + next step</span>
-      <p>Holding costs a few weeks against the November target, not trust. The audit bounds the per-claim rate under 1%, not at zero, so inline citations and a pre-send hold are launch conditions. Approve the hold by Friday, Oct 2, and pause Sales promotion. Engineering ships the fixes by Oct 23 (unsupported-addition rule, pre-send hold, inline citations, live-price check, verify-the-cause-before-drafting); the judge is recalibrated on a held-out set; the audit runs from Oct 26 and the go/no-go is Nov 9. Fail once: fix and re-run on a fresh 300. Fail twice: back to the CPO with a revised date. After Nov 9 I own the expansion call: 10 accounts behind per-account flags, scored continuously by the Level 3 judge; all 50 after 14 days with zero confirmed unsupported claims; the Eng Lead pulls the flag on the first confirmed fabrication and the account hears from us within one business day.</p>
+      <p>Holding costs a few weeks, not trust. Approve by Fri Oct 2; fixes by Oct 23; audit from Oct 26; go/no-go Nov 9.</p>
+      <p>Pass: 10 accounts go live behind flags, all 50 after 14 clean days. Fail twice: back to the CPO with a new date.</p>
+      <p>Riskiest assumption: that VPs open the citations. Wave 1 measures it.</p>
     </div>
   </div>
 
@@ -541,12 +543,12 @@
 <!-- ============ 7. REFLECTION ============ -->
 <section id="reflection" data-title="Reflection">
   <div class="eyebrow"><span>Reflection</span></div>
-  <h2>Reflection</h2>
+  <h2>Good enough is a number with a sample size behind it</h2>
 
   <div class="grid g2 refl" style="grid-template-columns: minmax(0,1.5fr) minmax(0,1fr);">
     <div class="card hero">
       <span class="label">One realization</span>
-      <p>Defining 'good enough' meant defining it in numbers with a sample size behind them: twenty rows showed a fabrication problem but could not show whether a fix worked, which is why the hold ends in an audit and not a date. The judge turned out to be part of the eval, since one rubric paragraph moved its agreement with human reviewers from 0.286 to 0.824. And the product's promise set the bar: 'without checking the source' is why one invented detail fails a whole answer.</p>
+      <p>Twenty rows showed a fabrication problem but could not show whether a fix worked, so the hold ends in an audit, not a date. The judge is part of the eval: one rubric paragraph moved its agreement with humans from 0.286 to 0.824. One call I got wrong first: a Level 3 judge on context misses, which users catch themselves, instead of on citations, which fail where nobody looks. The bet stops for a CPO decision if the audit fails twice.</p>
     </div>
     <div class="card tile" style="border-left:3px solid var(--amber);">
       <span class="label" style="color:var(--amber);">Next sprint challenge</span>
