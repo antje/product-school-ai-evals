@@ -9,35 +9,38 @@ _Written on the Pyramid Principle: the answer first, three arguments that do not
 
 ## The Answer
 
-I recommend we hold the Ascend IQ launch to our top 50 accounts until it passes the zero-fabrication audit, because in our beta 6 of 20 answers stated a detail the source does not support, and shipping now puts more than $2.5M of annual renewals in front of an answer a VP has a 97% chance of catching out within ten questions.
+I recommend we hold the Ascend IQ launch to our top 50 accounts until it passes the zero-fabrication audit, with the go/no-go on Nov 9, because in our beta 6 of 20 answers stated a detail the source does not support, and shipping now puts more than $2.5M of annual renewals in front of an answer a VP has a 97% chance of catching out within ten questions.
 
 ## The Arguments
 
-### 1. The failure we would ship is the one clients pay us to prevent
+### 1. Brand risk: the failure we would ship is the one clients pay us to prevent
 
 Ascend IQ is sold on one promise: an answer a VP can put in front of their board without checking the source. Our top failure breaks exactly that. The agent invents specifics (a seat minimum, a "confirmed" speaker, a funding stage) and drops the qualifier that makes a true fact false ("native" export, "seamless" integration). None of the beta answers cite a source, so the VP has no way to catch it before the board does.
 
-### 2. The exposure lands on our most valuable accounts, all at once, where we can't take it back
+### 2. Revenue risk: the exposure lands on our most valuable accounts, all at once, where we can't take it back
 
 The launch cohort is the 50 accounts that matter most to Q4 retention. At the beta rate, nearly every one of them meets a fabricated detail in the first week. And an invented number doesn't stay in our product: it goes into a client's board deck, so we learn about it from them.
 
-### 3. We can't yet prove it's fixed, but we know exactly what would
+### 3. Reliability risk: we can't yet prove it's fixed, but we know exactly what would
 
 The pieces are in place: a judge that agrees with human reviewers (κ 0.824 on the traces its rubric was tuned on), a CI gate that already blocked a regressing change (PR #218), and continuous coverage funded for fabrication and attribution. What's missing is the proof itself, the 300-claim audit. The hold is a measurement we can schedule, not an open-ended fix.
 
 ## Evidence · Trust Metrics
 
 ```
-- Fabricated specifics: 6 of 20 beta answers (Gate: 0 unsupported claims in a 300-claim held-out audit) FAIL · 02-failure-discovery/failure-taxonomy.md
-- All hallucination failures: 9 of 20 beta answers (fabricated specifics 6, dropped qualifiers 3); 11 of 20 failing overall, the 11th a P2 brand-voice miss outside the top three (Gate: 0) FAIL · 02-failure-discovery/audit-log.md
-- Answers citing a source: 0 of 20 (Gate: every answer shows its sources) FAIL · 03-eval-suites/lab-2-eval-spec.md
-- Hard release gate, 300-claim audit: not yet built; dropped qualifiers count as unsupported claims (Gate: 0 in 300, bounds the per-claim rate under 1% at 95%) NOT MEASURED · 04-eval-gates/lab-2-launch-strategy.md
-- CI faithfulness on PR #218: 87, down 9 from main (Gate: floor 95, max regression 3) FAIL, merge blocked · 04-eval-gates/lab-ci-gate-policy.md
-- Latency P95 on the measured case: 4.2s (Gate: ≤ 2.0s Soft, 10s ceiling) FAIL, override band · 04-eval-gates/lab-1-gate-map.md
-- Usage-drop trajectory T-01-A: 1 of 6 dimensions (Gate: path-aware verdict) HOLD · 03-eval-suites/lab-1b-trajectory.md
-- Judge agreement with humans: κ 0.824 on the 12 calibration traces the rubric was tuned on (Gate: κ ≥ 0.6 on a held-out set) PASS on the tuning set, held-out NOT MEASURED · 03-eval-suites/lab-judge-calibration.md
-- Judge coverage of confirmed failures: 9 of 11, code layers 1 of 11 (Gate: none, informational) · 03-eval-suites/lab-1-eval-suite.md
-- Continuous coverage funded: fabrication + attribution at Level 3, $150K (Gate: ≤ $200K, ≤ 3 slots) PASS · 05-scale/lab-2-budget-crisis.md
+- Hallucinations · Fabricated specifics: 6 of 20 beta answers (Gate: 0 unsupported claims in a 300-claim held-out audit) FAIL · 02-failure-discovery/failure-taxonomy.md
+- Hallucinations · All hallucination failures: 9 of 20 beta answers (fabricated specifics 6, dropped qualifiers 3); 11 of 20 failing overall (Gate: 0) FAIL · 02-failure-discovery/audit-log.md
+- Hallucinations · Answers citing a source: 0 of 20 (Gate: every answer shows its sources) FAIL · 03-eval-suites/lab-2-eval-spec.md
+- Hallucinations · Hard release gate, 300-claim audit: not yet built; dropped qualifiers count as unsupported claims (Gate: 0 in 300, bounds the per-claim rate under 1% at 95%) NOT MEASURED · 04-eval-gates/lab-2-launch-strategy.md
+- Hallucinations · CI faithfulness on PR #218: 87, down 9 from main (Gate: floor 95, max regression 3) FAIL, merge blocked · 04-eval-gates/lab-ci-gate-policy.md
+- Robustness · Retrieval miss reported as "cannot find": 1 of 20 (the SOC2 badge was in the footer), P1 (Gate: none at launch, fixed after the P0s) FAIL · 02-failure-discovery/failure-taxonomy.md
+- Robustness · Usage-drop trajectory T-01-A: 1 of 6 dimensions, a cause guessed without checking ingestion (Gate: path-aware verdict) HOLD · 03-eval-suites/lab-1b-trajectory.md
+- UX Trust · Brand voice: 1 of 20 audited answers, slang in a drafted cold email (Gate: Advisory, mean ≥ 4.0 of 5 over 50 drafts) FAIL on the audit row, 50-draft set NOT MEASURED · 04-eval-gates/lab-2-launch-strategy.md
+- Fairness · 0 of 20 audited answers tagged; one competitor comparison favoured our own product; regional bias not yet measured (Gate: none set, monitored at Level 2) NOT MEASURED · 05-scale/lab-2-budget-crisis.md
+- Latency · P95 on the measured case: 4.2s (Gate: ≤ 2.0s Soft, 10s ceiling) FAIL, override band · 04-eval-gates/lab-1-gate-map.md
+- Measurement · Judge agreement with humans: κ 0.824 on the 12 calibration traces the rubric was tuned on (Gate: κ ≥ 0.6 on a held-out set) PASS on the tuning set, held-out NOT MEASURED · 03-eval-suites/lab-judge-calibration.md
+- Measurement · Judge coverage of confirmed failures: 9 of 11, code layers 1 of 11 (Gate: none, informational) · 03-eval-suites/lab-1-eval-suite.md
+- Measurement · Continuous coverage funded: fabrication + attribution at Level 3, $150K (Gate: ≤ $200K, ≤ 3 slots) PASS · 05-scale/lab-2-budget-crisis.md
 ```
 
 ## Business Risk
