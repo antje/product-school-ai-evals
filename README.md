@@ -2,10 +2,6 @@
 
 > My final project for Product School's **AI Evals** certification. One evaluation system for a real LLM feature, from strategy, through failure discovery and an automated eval suite, to the gates and governance that let it ship safely.
 
-This is a **template repo**. Click **Use this template → Create a new repository**, name it `ai-evals` (or `<your-feature>-evals`), and fill in one folder per module as you go. The repo URL is your submission.
-
-> **Tools & cost.** The eval platform is **free** — LangSmith's Developer tier (5,000 traces/month) needs **no credit card**. The only real cost is **model usage** (OpenAI or Claude), typically a few cents for the whole course. If your IT blocks LangSmith, **promptfoo** (open-source, no signup, runs locally) is a supported fallback, or follow the instructor's live demo and still complete the written artifacts. Keep model keys in a gitignored `.env`, never commit them.
-
 ---
 
 ## Deliverables at a glance
@@ -33,41 +29,6 @@ This is a **template repo**. Click **Use this template → Create a new reposito
 Ascend IQ is a customer-facing AI agent inside Ascend Analytics, a B2B market-intelligence platform. It answers plain-language competitive questions for VP-level strategists at Fortune 500 accounts who pay $50k+ a year for verified data. A wrong answer in front of one of the top 50 accounts costs the renewal and the relationship, so the question this repo answers is whether it clears that bar: ship, or hold.
 
 ---
-
-## Per-module loop
-
-**The guided way (recommended): paste the module's `LAB.md` into your AI assistant.**
-Each module folder ships a **`LAB.md`** runbook written *for your assistant* (ChatGPT, Claude,
-Gemini, Cursor, Claude Code, Codex). Paste it in and it walks you through the module's labs one step
-at a time — asking your decisions, telling you exactly what to run in LangSmith/promptfoo, and writing
-each deliverable file for you to commit.
-
-| Module | Paste this into your assistant | Writes |
-|---|---|---|
-| M1 | `01-evaluation-strategy/LAB.md` | strategy canvas + eval harness proof |
-| M2 | `02-failure-discovery/LAB.md` | audit log + failure taxonomy |
-| M3 | `03-eval-suites/LAB.md` | eval suite + trajectory + spec (+ calibration) |
-| M4 | `04-eval-gates/LAB.md` | gate map + CI policy + launch strategy |
-| M5 | `05-scale/LAB.md` | coverage matrix + budget crisis |
-| M6 | `06-culture/LAB.md` | ship/hold memo + final pitch |
-
-A good opener: *"Open `05-scale/LAB.md` in this repo and walk me through it one step at a time. Stop and
-ask me at every decision."* If your assistant can't read files (plain ChatGPT), paste the `LAB.md`
-contents directly.
-
-**The click-through way (still supported).** Prefer the interactive tools?
-1. Open the module's tool from the deck (e.g., the Evaluation Strategy Canvas).
-2. Build your artifact. Click **Copy as markdown**.
-3. Paste into the matching file (e.g., `01-evaluation-strategy/strategy-canvas.md`).
-4. Run the tool's self-review checklist + the AI-review prompt.
-5. Commit. Push. Move on.
-
-See [`PROMPTS.md`](PROMPTS.md) for the quick-reference prompts.
-
-## How to submit
-
-- Turn the deliverable files into your final pitch (use the M6 Final Pitch tool, or a tool like Gamma).
-- Post your repo URL in `#ai-evals-cohort` and upload to the learning-platform portal within 7 days of your cohort ending.
 
 ## Repo structure
 
