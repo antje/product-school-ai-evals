@@ -27,13 +27,13 @@ The pieces are in place: a judge that agrees with human reviewers (κ 0.824), a 
 
 ```
 - Fabricated specifics: 6 of 20 beta answers (Gate: 0 unsupported claims in a 300-claim held-out audit) FAIL · 02-failure-discovery/failure-taxonomy.md
-- All hallucination failures: 9 of 20 beta answers, 11 of 20 failing overall (Gate: 0) FAIL · 02-failure-discovery/audit-log.md
+- All hallucination failures: 9 of 20 beta answers (fabricated specifics 6, dropped qualifiers 3); 11 of 20 failing overall, the 11th a P2 brand-voice miss outside the top three (Gate: 0) FAIL · 02-failure-discovery/audit-log.md
 - Answers citing a source: 0 of 20 (Gate: every answer shows its sources) FAIL · 03-eval-suites/lab-2-eval-spec.md
-- Hard release gate, 300-claim audit: not yet built (Gate: 0 in 300, bounds the rate under 1% at 95%) NOT MEASURED · 04-eval-gates/lab-2-launch-strategy.md
+- Hard release gate, 300-claim audit: not yet built; dropped qualifiers count as unsupported claims (Gate: 0 in 300, bounds the per-claim rate under 1% at 95%) NOT MEASURED · 04-eval-gates/lab-2-launch-strategy.md
 - CI faithfulness on PR #218: 87, down 9 from main (Gate: floor 95, max regression 3) FAIL, merge blocked · 04-eval-gates/lab-ci-gate-policy.md
 - Latency P95 on the measured case: 4.2s (Gate: ≤ 2.0s Soft, 10s ceiling) FAIL, override band · 04-eval-gates/lab-1-gate-map.md
 - Usage-drop trajectory T-01-A: 1 of 6 dimensions (Gate: path-aware verdict) HOLD · 03-eval-suites/lab-1b-trajectory.md
-- Judge agreement with humans: κ 0.824 (Gate: κ ≥ 0.6) PASS · 03-eval-suites/lab-judge-calibration.md
+- Judge agreement with humans: κ 0.824 on the 12 calibration traces the rubric was tuned on (Gate: κ ≥ 0.6 on a held-out set) PASS on the tuning set, held-out NOT MEASURED · 03-eval-suites/lab-judge-calibration.md
 - Judge coverage of confirmed failures: 9 of 11, code layers 1 of 11 (Gate: none, informational) · 03-eval-suites/lab-1-eval-suite.md
 - Continuous coverage funded: fabrication + attribution at Level 3, $150K (Gate: ≤ $200K, ≤ 3 slots) PASS · 05-scale/lab-2-budget-crisis.md
 ```
@@ -44,9 +44,13 @@ The pieces are in place: a judge that agrees with human reviewers (κ 0.824), a 
 
 **If we hold:** the cost is time, not trust. The engagement problem Ascend IQ was built to fix continues while we hold. With the plan below, the first wave ships Nov 9, a few weeks later than the November target, still before Q4 renewal conversations, and with a measured fabrication rate instead of a hope.
 
+**What the audit buys, and what it doesn't:** passing it bounds the per-claim rate under 1%, not at zero. At about ten claims an answer, that still allows up to one answer in ten to carry an error. That residual is why inline citations and the pre-send hold are launch conditions rather than extras: a flagged answer is held before it is sent, and anything that gets past the check carries the source a VP can open.
+
 ## Next Step · Decision Needed
 
-Approve the hold and this plan by **Friday, Oct 2**, and ask Sales to stop promoting Ascend IQ to key accounts until the go/no-go. Engineering ships the fixes by Oct 23: an unsupported-addition rule in the judge, a pre-send check that holds flagged answers, inline citations, and a live-price check. We run the 300-claim audit from Oct 26 and I bring you the result on **Nov 9**. If it passes, the first 10 accounts go live that day under the staged rollout; if it fails, we fix and re-run on a fresh 300, with no partial launch.
+Approve the hold and this plan by **Friday, Oct 2**, and ask Sales to stop promoting Ascend IQ to key accounts until the go/no-go. Engineering ships the fixes by Oct 23: an unsupported-addition rule in the judge, a pre-send check that holds flagged answers (inside the latency budget), inline citations, a live-price check, and a rule that the agent verifies a cause before it drafts a reply, the step the usage-drop trajectory skipped. Before the audit, the judge is recalibrated on a held-out labelled set, since its κ of 0.824 was measured on the traces the rubric was tuned on. We run the 300-claim audit from Oct 26 and I bring you the result on **Nov 9**. If it passes, the first 10 accounts go live that day. If it fails, we fix and re-run on a fresh 300, with no partial launch; a second failure comes back to you with a revised date, and Sales keeps the pause.
+
+**After Nov 9:** I own the go/no-go and the expansion call. Each account sits behind a feature flag. The first wave is the 10 accounts that asked the most questions in the beta, and the Level 3 judge already funded for fabrication and attribution scores their production answers continuously. Expansion to all 50 needs 14 days with zero human-confirmed unsupported claims in that sampling and P95 latency inside the Soft gate. The Eng Lead on call turns the flag off for the wave on the first confirmed fabrication, and the affected account hears from us within one business day with the corrected figure and its source.
 
 ## Reflection
 
