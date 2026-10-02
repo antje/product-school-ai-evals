@@ -1,7 +1,5 @@
 # First LLM-as-a-Judge Eval, Module 1
 
-> Repo file `ai-evals/01-evaluation-strategy/eval-harness-proof.md`. The eval evidence behind the **Eval Results** slide of the final pitch deck (Module 6).
-
 ## Version A, Concise, system prompt used
 
 ```
@@ -21,7 +19,7 @@ Both run against the same user message: the Q4 Marketing Campaign Update email f
 ## Eval setup, dataset name + judge model/family
 
 - Harness: `01-evaluation-strategy/eval_lab.ipynb`, plain Python, keys loaded from a gitignored `.env`. Executed end to end with `jupyter nbconvert --execute`; outputs are stored in the notebook.
-- Generator: `gpt-4.1-nano` (OpenAI), default temperature. Chosen because the lab asks for a fast, cheap chat model.
+- Generator: `gpt-4.1-nano` (OpenAI), default temperature. Chosen as a fast, cheap chat model, which is all the summary task needs.
 - Judge: `claude-opus-5` (Anthropic). A different model family from the generator, which avoids self-preference bias, and more capable than the model it grades.
 - Dataset `Module1Output`: 22 rows. 20 starter rows from the cold-start prompt below (`fixtures/module1-starter-dataset.csv`, with the generating model's first-pass labels) plus Version A and Version B.
 - Evaluator: Conciseness LLM-as-a-Judge. Per row it returns `fidelity_pass`, `brevity_pass`, a score of 1 (good) or 0 (bad) and a one-sentence reason, under the golden-set criteria below. Results in `fixtures/module1-judge-results.csv`.
@@ -54,7 +52,7 @@ Generate 20 example rows for evaluating executive email-summary quality. Each ro
 
 The model returned 20 rows, 10 good and 10 bad, across the five domains, with every bad type represented (dropped deadline, changed number, invented claim, padding past 100 words, dropped metric). It did not honour the email length spec: emails came out at 49 to 66 words. The "good" reasons are formulaic ("preserves the metric, risk, and deadline"), so those labels still need a human check.
 
-## Your definition of good vs bad (golden-set criteria), the graded part, write your own
+## Definition of good vs bad (golden-set criteria)
 
 The reader is a CEO who acts on the summary without opening the email. A summary is judged in two ordered tests.
 
@@ -73,7 +71,7 @@ The exact wording the judge saw is `GOLDEN_CRITERIA` in `eval_lab.ipynb`. This s
 
 Reflection on the two prompts: for a CEO who needs speed, A is the right shape and the wrong content; it needs one more clause per bullet (the baseline, the blocker). For a comms team that needs polish, B is the right register and the wrong instinct; "keep a positive tone" is what turned a delay into "on track". The fix for B is to drop that instruction, not to shorten it.
 
-## Screenshots, links or repo paths (optional if you followed the demo)
+## Repo paths
 
 - `01-evaluation-strategy/eval_lab.ipynb`: the executed notebook with all cell outputs (generation, head-to-head verdict, per-row scores).
 - `01-evaluation-strategy/fixtures/module1-starter-dataset.csv`: the 20 starter rows with first-pass labels.

@@ -1,8 +1,5 @@
 # Failure Taxonomy Canvas · Ascend IQ
 
-> Repo file `ai-evals/02-failure-discovery/failure-taxonomy.md` (the repo is your submission); becomes the Failure Taxonomy slide of the final pitch deck.
-> File: `ai-evals/02-failure-discovery/failure-taxonomy.md`
-
 ## Top 3 Prioritized Failures
 
 | Rank | Failure Type | Trust Tag | Agentic Mode | Frequency | Severity | Business Impact |

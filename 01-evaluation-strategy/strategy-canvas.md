@@ -1,8 +1,5 @@
 # AI Evaluation Strategy Canvas
 
-> Repo file `ai-evals/01-evaluation-strategy/strategy-canvas.md` (the repo is your submission).
-> Becomes the **Strategy Canvas** slide of the final pitch deck you assemble in Module 6.
-
 ## 1. Product Strategy, The Context
 
 **Target user:** VP-level strategists and product leaders at Fortune 500 companies who pay $50k+ a year for verified market intelligence.

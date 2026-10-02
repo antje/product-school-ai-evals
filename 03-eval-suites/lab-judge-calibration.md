@@ -1,12 +1,12 @@
 # Lab, Judge Calibration (Ascend IQ grounding rubric)
 
-> Repo file `ai-evals/03-eval-suites/lab-judge-calibration.md`. Twelve grounding traces from the M3 Judge Calibration tool, in `fixtures/calibration-traces.csv` with my labels and the tool's canned judge labels. Measured in `03-eval-suites/eval_lab.ipynb`; judge `claude-opus-5`.
+Twelve grounding traces, in `fixtures/calibration-traces.csv` with my labels and the reference judge labels supplied with the traces. Measured in `03-eval-suites/eval_lab.ipynb`; judge `claude-opus-5`.
 
 **Cohen's κ:** 0.824 (near-perfect) on the third rubric, PASSES the κ ≥ 0.60 gate. The first two rubrics failed it.
 
 | Judge | κ | Raw agreement p₀ | Chance agreement pₑ | Disagreements |
 |---|---|---|---|---|
-| The tool's canned judge | -0.286 (worse than chance) | 50.0% | 61.1% | 6/12 |
+| The supplied reference judge | -0.286 (worse than chance) | 50.0% | 61.1% | 6/12 |
 | Ours, rubric v1, "is the answer grounded?" | 0.286 (fair) | 58.3% | 41.7% | 5/12 |
 | Ours, rubric v2, abstention made explicit | 0.286 (fair) | 58.3% | 41.7% | 5/12 |
 | Ours, rubric v3, evidence scope stated | 0.824 (near-perfect) | 91.7% | 52.8% | 1/12 |
@@ -20,7 +20,7 @@
 | **Judge: PASS** | 7 | 0 |
 | **Judge: FAIL** | 1 | 4 |
 
-### Confusion matrix (judge × me), the tool's canned judge
+### Confusion matrix (judge × me), the supplied reference judge
 
 | | Me: PASS | Me: FAIL |
 |---|---|---|
@@ -31,7 +31,7 @@
 
 Two miscalibrations, and only one is the textbook case.
 
-**The tool's judge rewards fluency and punishes honesty.** It passes all four ungrounded answers: an invented annual renewal (T-02), SLA penalty figures that are not in the retrieved doc (T-03), a Salesforce integration absent from the workspace config (T-07), and a confident 12% tiered discount that appears nowhere in the source (T-09). It fails both honest abstentions (T-06, T-10), where saying "I could not find that field" is the correct grounded behaviour. Its κ of -0.286 is worse than chance. That is the worst outcome for an evaluator, because it is systematically inverted rather than noisy, so trusting it would train the product toward fluent fabrication.
+**The supplied reference judge rewards fluency and punishes honesty.** It passes all four ungrounded answers: an invented annual renewal (T-02), SLA penalty figures that are not in the retrieved doc (T-03), a Salesforce integration absent from the workspace config (T-07), and a confident 12% tiered discount that appears nowhere in the source (T-09). It fails both honest abstentions (T-06, T-10), where saying "I could not find that field" is the correct grounded behaviour. Its κ of -0.286 is worse than chance. That is the worst outcome for an evaluator, because it is systematically inverted rather than noisy, so trusting it would train the product toward fluent fabrication.
 
 **Our judge had the opposite problem, and its cause was the data rather than a length bias.** All five of its disagreements (T-01, T-04, T-05, T-08, T-11) are the same shape: it failed answers whose claims are fine, because the fixture only *describes* the retrieved source ("matches the retrieved usage record") and never includes it. The judge refused to accept a description of evidence as evidence. Rubric v2, which spelled out that abstention is a pass, changed nothing, because v1 already passed both abstentions. The rubric never said which part of the trace counts as the source.
 

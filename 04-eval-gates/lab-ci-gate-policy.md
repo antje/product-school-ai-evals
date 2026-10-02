@@ -15,12 +15,12 @@
 
 BLOCK the merge. Faithfulness fell 9 points, three times the 3-point limit, and landed at 87, below the 95 floor. Faithfulness guards the Module 2 P0 (fabricated specifics), so it is blocking and there is no override at the PR level. The other three blocking dimensions pass. Latency (-4) and cost (-6) trip their warnings but do not block: the Module 1 trade-off puts factual integrity ahead of speed. The developer reworking the retrieval prompt should still know the change also made answers slower and costlier. The fix goes back to the prompt, not to the thresholds.
 
-Thresholds changed from the template, all per dimension. On 30 cases a full flip of one case moves a score 3.3 points, and any regression on a P0 or P1 case fails the gate. So blocking dimensions allow less than one full flip per PR, and floors sit at most one case below `main` so slow erosion across small PRs still trips the gate:
-- Faithfulness floor 90 → 95. The P0; the template floor tolerated about three ungrounded cases against a spec of zero.
+Thresholds changed from the starting defaults, all per dimension. On 30 cases a full flip of one case moves a score 3.3 points, and any regression on a P0 or P1 case fails the gate. So blocking dimensions allow less than one full flip per PR, and floors sit at most one case below `main` so slow erosion across small PRs still trips the gate:
+- Faithfulness floor 90 → 95. The P0; the default floor tolerated about three ungrounded cases against a spec of zero.
 - Task completion floor 85 → 89, max regression 5 → 3. A P1: a plausible answer from an unfinished path.
 - Tool selection floor 80 → 87, max regression stays 5: a different but valid tool is not a regression, and one that matters shows up in task completion.
 - Safety unchanged at 98 / 1. It also covers off-scope tool calls, which task completion does not catch.
-- Latency max regression 8 → 3 and cost 10 → 5, both still warn-only: a warning that never fires tells nobody anything, and at the template values this PR's latency and cost regressions were silent.
+- Latency max regression 8 → 3 and cost 10 → 5, both still warn-only: a warning that never fires tells nobody anything, and at the default values this PR's latency and cost regressions were silent.
 
 A blended score would have merged this PR: across all six dimensions it drops 3.3 points (91.5 to 88.2), one case's worth, hiding three cases of lost grounding behind a gain in task completion.
 

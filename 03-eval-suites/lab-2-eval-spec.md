@@ -47,7 +47,3 @@ Every answer shows its sources inline. None of the 20 audited beta answers cites
 ### C. For Leadership (bi-weekly update)
 
 Ascend IQ's top risk is fabricated specifics: 6 of 20 audited beta answers stated a detail the source does not support, and at that rate a VP asking ten questions has a 97% chance of carrying one into a board deck. We have a per-claim grounding gate wired into CI. The launch bar is zero unsupported claims in a 300-claim sample the system has never seen, which puts the true rate under 1% with 95% confidence and protects at least $2.5M of annual renewals across the 50-account cohort (50 accounts at the $50k floor). Tracking: how often an unsupported claim reaches a user, how closely the automated reviewer matches human reviewers, and the share of answers that ship with their sources shown. The audit is the schedule risk rather than the fix: 300 claims is the smallest sample that can clear the bar, and the 20 rows we have cannot.
-
----
-
-_Save this to `03-eval-suites/lab-2-eval-spec.md` in your repo (the repo is your submission). It underpins the Eval Results slide of your final pitch deck._

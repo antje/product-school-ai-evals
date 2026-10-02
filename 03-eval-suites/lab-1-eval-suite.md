@@ -28,13 +28,13 @@ The #1 risk from the Module 2 taxonomy: Fabricated Specifics, P0, #HALLUCINATION
 
 ## Run detail
 
-Run from `03-eval-suites/eval_lab.ipynb` (plain Python, repo `.venv`); raw per-row scores in `fixtures/suite-results.csv`, the full run log is archived with the module materials.
+Run from `03-eval-suites/eval_lab.ipynb` (plain Python, repo `.venv`); raw per-row scores in `fixtures/suite-results.csv`.
 
-Score convention follows the lab: **1 = the layer caught the failure, 0 = it missed.** The evaluators emit the opposite (0 = FAIL), so the raw CSV is inverted relative to the tables here.
+Score convention: **1 = the layer caught the failure, 0 = it missed.** The evaluators emit the opposite (0 = FAIL), so the raw CSV is inverted relative to the tables here.
 
 Layers 1 and 2 are pure Python, no model call, which is what makes them free to run and identical on every run. Only Layer 3 calls a model (`claude-opus-5`, the judge used in Modules 1 and 2). The walkthrough presents Layers 1 and 2 as system prompts; sending a deterministic rule to a model would make it probabilistic, so they are implemented as functions.
 
-Layer 3 runs the M3 walkthrough's judge prompt. The instructor notebook uses the fuller Module 2 QA Analyst rubric, which is the comparison behind "what I'd ship next": 11 of 11 with the M2 rubric against 9 of 11 with the M3 one.
+Layer 3 runs a two-criterion judge prompt (factual error, completeness error). The fuller Module 2 QA Analyst rubric, which also names unsupported additions, is the comparison behind "what I'd ship next": 11 of 11 with the M2 rubric against 9 of 11 with the M3 one.
 
 ### Both Layer 1 variants
 
@@ -42,8 +42,8 @@ The two obvious deterministic rules disagree on this case.
 
 | Variant | Rule | Score | Why |
 |---|---|---|---|
-| 1a · hedge rule (the walkthrough's) | A `$` plus a price keyword must carry "subject to change" | 1 | Fires, but on phrasing rather than on the figure |
-| 1b · figure grounding (the instructor notebook's) | Every `$` figure in the answer must appear literally in the reference | 0 | Misses: "$49" appears in the reference as the old price, and a substring match cannot tell "Old Price" from "New Price" |
+| 1a · hedge rule | A `$` plus a price keyword must carry "subject to change" | 1 | Fires, but on phrasing rather than on the figure |
+| 1b · figure grounding | Every `$` figure in the answer must appear literally in the reference | 0 | Misses: "$49" appears in the reference as the old price, and a substring match cannot tell "Old Price" from "New Price" |
 
 Neither variant checks whether the number is the current one. That is why the next change has to compare against the live source.
 

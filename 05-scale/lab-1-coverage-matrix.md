@@ -16,7 +16,7 @@
 
 ### Latency
 - **Method:** Server-side timing on every request, P95 from report published to summary delivered, tracked per release.
-- **Ground truth:** Pass = P95 ≤ 5 minutes from report published to summary delivered. The summary has to reach clients with the report's publication email, which goes out as a batch within minutes. A summary that misses the 5 minutes does not hold the email: the publication email goes out on time without it, and the summary follows in a separate message. The brief gives no SLA for this product, so the 5 minutes is an assumption to confirm with Eng.
+- **Ground truth:** Pass = P95 ≤ 5 minutes from report published to summary delivered. The summary has to reach clients with the report's publication email, which goes out as a batch within minutes. A summary that misses the 5 minutes does not hold the email: the publication email goes out on time without it, and the summary follows in a separate message. No SLA is set for this product yet, so the 5 minutes is an assumption to confirm with Eng.
 
 ## Strategic acceptance
 

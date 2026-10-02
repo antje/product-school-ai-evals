@@ -1,8 +1,6 @@
 # Lab, Trajectory Eval (Ascend IQ usage-drop task)
 
-> Repo file `ai-evals/03-eval-suites/lab-1b-trajectory.md`. Grades the agent's **path**, not just the final answer.
->
-> Scored in `03-eval-suites/eval_lab.ipynb` against `trajectory-traces.csv`. Dimensions 1, 2, 3 and 5 are checked in code (set comparison, argument equality, duplicate detection, precedence); 4 and 6 lean on the fixture's `expected_flag` column, because the signal for recovery and grounding is in the prose observations rather than in a typed error.
+Grades the agent's **path**, not just the final answer. Scored in `03-eval-suites/eval_lab.ipynb` against `trajectory-traces.csv`. Dimensions 1, 2, 3 and 5 are checked in code (set comparison, argument equality, duplicate detection, precedence); 4 and 6 lean on the fixture's `expected_flag` column, because the signal for recovery and grounding is in the prose observations rather than in a typed error.
 
 **Matching mode:** unordered, plus one precedence rule: `draft_reply` must come after `compare_weeks`.
 **Score:** 1/6 · **Verdict:** HOLD
